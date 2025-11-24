@@ -1,0 +1,6 @@
+requests 
+pandas 
+flask 
+langchain 
+chromadb 
+sentence-transformers 
