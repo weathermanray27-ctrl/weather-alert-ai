@@ -1,1 +1,42 @@
-"<html><body><h1>Weather Chatbot</h1></body></html>" 
+"<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Weather Alerts Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Segoe UI, Arial, sans-serif; margin: 2rem; color: #1f1f1f; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { margin-bottom: 0.5rem; }
+    .sub { color: #666; margin-bottom: 1.5rem; }
+    form { display: flex; gap: 0.75rem; }
+    input[type="text"] { flex: 1; padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px; }
+    button { padding: 0.6rem 1rem; border: none; background: #0078d4; color: white; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #106ebe; }
+    .answer { margin-top: 1.5rem; padding: 1rem; background: #f5f7fa; border: 1px solid #e1e4e8; border-radius: 6px; white-space: pre-wrap; }
+    .query { color: #555; margin-top: 0.75rem; }
+    footer { margin-top: 2rem; font-size: 0.9rem; color: #777; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Weather Alerts Chat</h1>
+    <div class="sub">Ask natural-language questions about active weather alerts.</div>
+
+    <form method="POST">
+      <input type="text" name="query" placeholder="e.g., What severe alerts are active in Arizona?" value="{{ query or '' }}">
+      <button type="submit">Ask</button>
+    </form>
+
+    {% if answer %}
+      <div class="query"><b>Question:</b> {{ query }}</div>
+      <div class="answer"><b>Answer:</b> {{ answer }}</div>
+    {% endif %}
+
+    <footer>
+      Uses RAG over your CSV-ingested alerts (Chroma + embeddings). Responses reflect current data in your vector DB.
+    </footer>
+  </div>
+</body>
+</html>
+" 
