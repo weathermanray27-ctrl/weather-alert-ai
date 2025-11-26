@@ -9,7 +9,9 @@ from flask import Flask, request, render_template
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
+from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
 
 # --- Config paths ---
@@ -97,6 +99,11 @@ def chat():
                 answer = f"Error: {str(e)}"
 
     return render_template("index.html", query=query, answer=answer)
+
+@app.route("/health", methods=["GET"]) 
+def health():
+    # Basic health check endpoint: returns 200 if the app is responsive
+    return {"status": "ok"}, 200
 
 if __name__ == "__main__":
     # For local dev only
