@@ -34,6 +34,14 @@ $env:OPENAI_API_KEY="sk-..."
 python phase2_chatbot\app\chatbot.py
 ```
 
+### Prepare for hosting (WSGI)
+- The Flask app now exposes a WSGI entry point in `phase2_chatbot/app/wsgi.py` so you can run it with production servers such as Gunicorn or Azure App Service.
+- Example Gunicorn command (Linux hosting):
+   ```bash
+   gunicorn --chdir phase2_chatbot/app --bind 0.0.0.0:8000 wsgi:app
+   ```
+- For Azure App Service (Linux), set `startupCommand` (or `WEBSITE_RUN_FROM_PACKAGE`) to a similar Gunicorn command so the service boots via `wsgi:app`.
+
 ### Ollama (local mode)
 1. Install Ollama (Windows): open https://ollama.com/download/windows and run the installer. Then open a new PowerShell so PATH refreshes.
 2. Start Ollama:
