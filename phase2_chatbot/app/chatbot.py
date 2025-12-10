@@ -83,7 +83,7 @@ def chat():
                                 from langchain_openai import ChatOpenAI
                                 llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
                             else:
-                                from langchain_community.chat_models import ChatOllama
+                                from langchain_ollama import ChatOllama
                                 llm = ChatOllama(model="mistral", temperature=0)
                         except Exception as e:
                             answer = f"LLM initialization failed: {str(e)}"

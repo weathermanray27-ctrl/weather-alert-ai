@@ -58,3 +58,20 @@ ollama run mistral "Say hello in one sentence."
 - OpenAI 401/429: verify your key and billing in the OpenAI dashboard.
 - Ollama connection refused: ensure `ollama serve` is running and `mistral` is pulled.
 - First query slow: expected due to lazy initialization; subsequent queries are fast.
+
+## Embed in Power BI via Power Apps visual
+1. **Host the chatbot** on an HTTPS endpoint that your report consumers can reach (for example, deploy the Flask app to Azure App Service and expose `/` over TLS).
+2. **Add the Power Apps visual** in Power BI Desktop, drop at least one field (or a dummy measure) into its `Data` well to unlock editing, then select **Create new** to open Power Apps Studio.
+3. **Insert an HTML text control** that fills the canvas and set its `HtmlText` formula to an iframe that points at your hosted chatbot:
+
+   ```powerapps
+   "<iframe src='https://your-chatbot-host.azurewebsites.net'
+	   width='100%' height='100%' frameborder='0'
+	   style='min-height:650px;'></iframe>"
+   ```
+
+4. **Save and publish** the generated app. When you return to Power BI, the visual loads the chatbot inline on the report canvas.
+
+Tips:
+- To pass filters or identity context, add the relevant fields to the Power Apps visual and reference them via `Param("FieldName")` inside Power Apps before appending them as query parameters to the iframe `src`.
+- Ensure the hosted chatbot uses the same auth boundary as your Power BI users (Azure AD-backed auth is typically easiest). If the iframe points to HTTP or a site blocked by CSP, Power BI will refuse to render it.
